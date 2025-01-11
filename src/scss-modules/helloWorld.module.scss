@@ -1,0 +1,12 @@
+.helloWorld {
+  @apply flex 
+  flex-col 
+  items-center 
+  py-3 px-8 
+  border-solid 
+  border-4 rounded-2xl
+  border-gray-900
+  bg-red-100 
+  text-9xl 
+  cursor-pointer;
+}
