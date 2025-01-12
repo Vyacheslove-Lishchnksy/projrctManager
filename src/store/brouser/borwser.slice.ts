@@ -1,0 +1,29 @@
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+
+interface IBrowser {
+  currentDir: string;
+  files: string[];
+}
+
+const initialState: IBrowser = {
+  currentDir: "D:\\root",
+  files: [],
+};
+
+const browserSlice = createSlice({
+  name: "browser",
+  initialState,
+  reducers: {
+    setFiles: (state, action: PayloadAction<string[]>) => {
+      state.files = action.payload;
+    },
+    setPath: (state, action: PayloadAction<string>) => {
+      state.currentDir = action.payload;
+    },
+  },
+});
+
+export const {
+  actions: { setFiles, setPath },
+  reducer: browserReduser,
+} = browserSlice;

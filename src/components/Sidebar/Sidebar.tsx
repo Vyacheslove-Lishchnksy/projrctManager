@@ -2,21 +2,35 @@ import newProjectIcon from "@/new.svg";
 import settingsIcon from "@/settings.svg";
 import styles from "./Sidebar.module.scss";
 import { IconButton } from "&/IconButton/IconButton";
-import { Section } from "&/Section/Section.tsx";
+import { Section } from "&/Section/Section";
+import { getAllGroups } from "../../api";
+import { setGroups } from "store/groups/groups.slice";
+import { useAppDispatch } from "store/configureStore";
+import { RootState } from "store/rootReduser";
+import { useSelector } from "react-redux";
+import { useEffect } from "react";
 
 export function Sidebar() {
+  const {
+    groupsReduser: { groups },
+  } = useSelector((state: RootState) => state);
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    dispatch(setGroups(getAllGroups()));
+  }, [dispatch]);
+
   return (
-    <section className={styles.sideber}>
+    <aside className={styles.sideber}>
       <nav className={styles.navigation}>
-        <h1 className={styles.title}>Projects</h1>
+        <h1 className={styles.title}>Groups</h1>
         <IconButton src={newProjectIcon} />
         <IconButton src={settingsIcon} />
       </nav>
       <ul className={styles.list}>
-        <Section>Project 1</Section>
-        <Section>Project 2</Section>
-        <Section>Project 3</Section>
+        {groups.map((group) => {
+          return <Section key={group}>{group}</Section>;
+        })}
       </ul>
-    </section>
+    </aside>
   );
 }
