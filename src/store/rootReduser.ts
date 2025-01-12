@@ -1,5 +1,8 @@
 import { combineReducers } from "@reduxjs/toolkit";
-import { settiengsReduser } from "./sattings/settings.slice";
+import { settingsReduser } from "./settings/settings.slice";
 
-export const rootReducer = combineReducers({ settiengsReduser });
+export const rootReducer = combineReducers({
+  settingsReduser,
+});
+
 export type RootState = ReturnType<typeof rootReducer>;

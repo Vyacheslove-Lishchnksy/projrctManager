@@ -1,21 +1,17 @@
-import "./App.css";
-import styles from "./scss-modules/helloWorld.module.scss";
 import { useSelector } from "react-redux";
 import { RootState } from "./store/rootReduser";
-import { useAppDispatch } from "./store/configureStore";
-import { actions } from "./store/sattings/settings.slice";
+import { Sidebar } from "./components/Sidebar/Sidebar";
+import { Navigation } from "components/Navigation/Navigation";
 
 function App() {
-  const { settiengsReduser } = useSelector((state: RootState) => state);
-  const dispatch = useAppDispatch();
+  const { settingsReduser } = useSelector((state: RootState) => state);
+  console.log(settingsReduser);
 
   return (
-    <section
-      onClick={() => dispatch(actions.add(1))}
-      className={styles.helloWorld}
-    >
-      <h1 className="select-none">{settiengsReduser.value}</h1>
-    </section>
+    <>
+      <Sidebar />
+      <Navigation />
+    </>
   );
 }
 

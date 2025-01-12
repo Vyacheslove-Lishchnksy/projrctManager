@@ -1,0 +1,22 @@
+.sideber {
+  @apply w-48
+  border-solid
+  border-r-4
+  border-primary-purple
+  box-content
+  p-3;
+}
+
+.navigation {
+  @apply flex
+  justify-between;
+}
+
+.title {
+  @apply text-xl
+  mr-10;
+}
+
+.list {
+  @apply py-4;
+}

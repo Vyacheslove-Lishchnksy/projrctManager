@@ -32,10 +32,10 @@ let win: BrowserWindow | null;
 function createWindow() {
   win = new BrowserWindow({
     width: 1080,
-    height: 500,
+    height: 600,
     backgroundColor: "#232323",
     darkTheme: true,
-    // resizable: false,
+    resizable: false,
     icon: path.join(process.env.VITE_PUBLIC, "electron-vite.svg"),
     webPreferences: {
       preload: path.join(__dirname, "preload.mjs"),

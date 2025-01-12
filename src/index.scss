@@ -4,12 +4,17 @@
 
 :root {
   font-family: Arial, Helvetica, sans-serif;
+  @apply text-primary-white;
 }
 
 body {
   display: flex;
-  justify-content: center;
-  align-items: center;
   height: 100dvh;
-  background: #232323;
+  justify-content: space-between;
+  @apply bg-fone-color;
+}
+
+#root {
+  display: flex;
+  height: 100dvh;
 }
