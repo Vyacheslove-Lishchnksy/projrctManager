@@ -6,7 +6,7 @@ interface IBrowser {
 }
 
 const initialState: IBrowser = {
-  currentDir: "D:\\root",
+  currentDir: "",
   files: [],
 };
 

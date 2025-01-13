@@ -1,19 +1,26 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+
+const startRootPath = "D:\\root";
 
 interface ISettings {
   pathToRoot: string;
+  startPath: string;
 }
 
 const initialState: ISettings = {
-  pathToRoot: "D:\\root",
+  pathToRoot: startRootPath,
+  startPath: startRootPath,
 };
 
 const settingsSlice = createSlice({
   name: "settings",
   initialState,
   reducers: {
-    setPuthToRoot: (state, action) => {
+    setPuthToRoot: (state, action: PayloadAction<string>) => {
       state.pathToRoot = action.payload;
+    },
+    setStartPath: (state, action: PayloadAction<string>) => {
+      state.startPath = action.payload;
     },
   },
 });

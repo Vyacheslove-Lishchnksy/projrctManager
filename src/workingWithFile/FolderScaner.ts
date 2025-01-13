@@ -40,7 +40,7 @@ class FolderScaner {
     const directorys = files.filter((item) => item.isDirectory());
     const groups = directorys.filter((dir) => this.isGroup(dir));
 
-    return groups.map((dir) => dir.name);
+    return groups;
   }
 
   public getAllProjects(directory: string) {
@@ -49,6 +49,11 @@ class FolderScaner {
     const groups = directorys.filter((dir) => this.isProject(dir));
 
     return groups.map((dir) => dir.name);
+  }
+
+  public getAllFiles(directory: string) {
+    const files = readdirSync(directory, { withFileTypes: true });
+    return files;
   }
 }
 

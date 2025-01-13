@@ -15,4 +15,8 @@ function getAllProjects(groupPath: string) {
   return scaner.getAllProjects(groupPath);
 }
 
-export { setRootFolder, getAllGroups, getAllProjects };
+function getAllFiles(path: string) {
+  return scaner.getAllFiles(path);
+}
+
+export { setRootFolder, getAllGroups, getAllProjects, getAllFiles };

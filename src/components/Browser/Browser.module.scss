@@ -3,3 +3,9 @@
   flex-1
   p-3;
 }
+
+.title {
+  @apply px-2
+  pb-2
+  text-lg;
+}
