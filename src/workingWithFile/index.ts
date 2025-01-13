@@ -11,4 +11,8 @@ function getAllGroups() {
   return scaner.getAllGroups();
 }
 
-export { setRootFolder, getAllGroups };
+function getAllProjects(groupPath: string) {
+  return scaner.getAllProjects(groupPath);
+}
+
+export { setRootFolder, getAllGroups, getAllProjects };

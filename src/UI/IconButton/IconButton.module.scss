@@ -1,3 +1,5 @@
 .icon {
-  @apply w-6;
+  @apply w-6
+  hover:bg-slate-800
+  rounded-sm;
 }

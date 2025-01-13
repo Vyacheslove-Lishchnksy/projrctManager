@@ -1,5 +1,5 @@
 import { Sidebar } from "./components/Sidebar/Sidebar";
-import { Browser } from "./components/Browser/Navigation";
+import { Browser } from "./components/Browser/Browser";
 
 function App() {
   return (

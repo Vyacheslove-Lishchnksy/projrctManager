@@ -1,0 +1,13 @@
+.icon {
+  @apply w-8
+  mr-4;
+}
+
+.section {
+  @apply flex
+  items-center
+  p-2
+  hover:bg-slate-800
+  rounded-lg
+  cursor-pointer;
+}

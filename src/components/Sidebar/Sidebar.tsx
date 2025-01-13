@@ -3,7 +3,7 @@ import settingsIcon from "@/settings.svg";
 import styles from "./Sidebar.module.scss";
 import { IconButton } from "&/IconButton/IconButton";
 import { Section } from "&/Section/Section";
-import { getAllGroups } from "../../api";
+import { getAllGroups } from "api/index";
 import { setGroups } from "store/groups/groups.slice";
 import { useAppDispatch } from "store/configureStore";
 import { RootState } from "store/rootReduser";
