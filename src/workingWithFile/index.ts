@@ -1,3 +1,4 @@
+import { Dirent } from "fs";
 import FolderScaner from "./FolderScaner";
 import Constnts from "./Setttings";
 
@@ -19,4 +20,19 @@ function getAllFiles(path: string) {
   return scaner.getAllFiles(path);
 }
 
-export { setRootFolder, getAllGroups, getAllProjects, getAllFiles };
+function isGroup(dir: Dirent) {
+  return scaner.isGroup(dir);
+}
+
+function isProject(dir: Dirent) {
+  return scaner.isProject(dir);
+}
+
+export {
+  setRootFolder,
+  getAllGroups,
+  getAllProjects,
+  getAllFiles,
+  isGroup,
+  isProject,
+};

@@ -7,7 +7,7 @@ class FolderScaner {
     this.rootDir = dir;
   }
 
-  private isGroup(dir: Dirent) {
+  public isGroup(dir: Dirent) {
     const files = readdirSync(join(dir.parentPath, dir.name));
 
     return files.reduce<boolean>((prev, current) => {
@@ -21,7 +21,7 @@ class FolderScaner {
     }, false);
   }
 
-  private isProject(dir: Dirent) {
+  public isProject(dir: Dirent) {
     const files = readdirSync(join(dir.parentPath, dir.name));
 
     return files.reduce<boolean>((prev, current) => {
@@ -53,7 +53,9 @@ class FolderScaner {
 
   public getAllFiles(directory: string) {
     const files = readdirSync(directory, { withFileTypes: true });
-    return files;
+    return files.filter((file) => {
+      return file.name !== "desktop.ini";
+    });
   }
 }
 

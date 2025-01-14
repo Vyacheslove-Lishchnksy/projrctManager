@@ -1,8 +1,9 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { Dirent } from "fs";
 
 interface IBrowser {
   currentDir: string;
-  files: string[];
+  files: Dirent[];
 }
 
 const initialState: IBrowser = {
@@ -14,7 +15,7 @@ const browserSlice = createSlice({
   name: "browser",
   initialState,
   reducers: {
-    setFiles: (state, action: PayloadAction<string[]>) => {
+    setFiles: (state, action: PayloadAction<Dirent[]>) => {
       state.files = action.payload;
     },
     setPath: (state, action: PayloadAction<string>) => {

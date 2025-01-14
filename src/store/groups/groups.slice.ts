@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Dirent } from "fs";
 
 interface IGroups {
@@ -18,10 +18,10 @@ const groupsSlice = createSlice({
     addGroup: (state, action) => {
       state.groups += action.payload;
     },
-    setGroups: (state, action) => {
+    setGroups: (state, action: PayloadAction<Dirent[]>) => {
       state.groups = action.payload;
     },
-    setCurrentGroup: (state, action) => {
+    setCurrentGroup: (state, action: PayloadAction<string>) => {
       state.currentGroup = action.payload;
     },
   },

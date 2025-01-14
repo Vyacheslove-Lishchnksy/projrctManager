@@ -1,8 +1,8 @@
 import styles from "./ImgSegment.module.scss";
 
-function ImgSegment({ children, src }: IImgSegmentProps) {
+function ImgSegment({ children, src, onClick }: IImgSegmentProps) {
   return (
-    <article className={styles.section}>
+    <article onClick={onClick} className={styles.section}>
       <img className={styles.icon} src={src} alt="" />
       <p>{children}</p>
     </article>
@@ -12,6 +12,7 @@ function ImgSegment({ children, src }: IImgSegmentProps) {
 interface IImgSegmentProps {
   src: string;
   children: string;
+  onClick: () => void;
 }
 
 export default ImgSegment;

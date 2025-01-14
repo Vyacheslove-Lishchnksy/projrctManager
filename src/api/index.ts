@@ -3,4 +3,6 @@ export {
   getAllGroups,
   getAllProjects,
   getAllFiles,
+  isGroup,
+  isProject,
 } from "../workingWithFile";

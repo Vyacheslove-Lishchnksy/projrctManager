@@ -9,6 +9,8 @@ import { useAppDispatch } from "store/configureStore";
 import { RootState } from "store/rootReduser";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
+import { setPath } from "store/brouser/borwser.slice";
+import { join } from "path";
 
 export function Sidebar() {
   const {
@@ -32,7 +34,8 @@ export function Sidebar() {
             <Section
               key={group.name}
               onClick={() => {
-                dispatch(setCurrentGroup(group));
+                dispatch(setCurrentGroup(group.name));
+                dispatch(setPath(join(group.parentPath, group.name)));
               }}
               isActive={group.name === currentGroup}
             >
