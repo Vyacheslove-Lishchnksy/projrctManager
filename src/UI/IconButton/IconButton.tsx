@@ -1,8 +1,8 @@
 import styles from "./IconButton.module.scss";
 
-export function IconButton({ src }: IIconButtonProps) {
+export function IconButton({ src, onClick }: IIconButtonProps) {
   return (
-    <button>
+    <button onClick={onClick}>
       <img className={styles.icon} src={src} />
     </button>
   );
@@ -10,4 +10,5 @@ export function IconButton({ src }: IIconButtonProps) {
 
 interface IIconButtonProps {
   src: string;
+  onClick?: () => void;
 }

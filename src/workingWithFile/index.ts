@@ -28,6 +28,14 @@ function isProject(dir: Dirent) {
   return scaner.isProject(dir);
 }
 
+function isRoot(dir: Dirent) {
+  return scaner.isRoot(dir);
+}
+
+function isRootDir(dir: string) {
+  return scaner.isRootDir(dir);
+}
+
 export {
   setRootFolder,
   getAllGroups,
@@ -35,4 +43,6 @@ export {
   getAllFiles,
   isGroup,
   isProject,
+  isRoot,
+  isRootDir,
 };

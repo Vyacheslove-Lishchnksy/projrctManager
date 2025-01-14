@@ -8,12 +8,23 @@ class FolderScaner {
   }
 
   public isGroup(dir: Dirent) {
-    const files = readdirSync(join(dir.parentPath, dir.name));
+    return this.hasFolder(".group")(dir);
+  }
 
-    return files.reduce<boolean>((prev, current) => {
+  public isProject(dir: Dirent) {
+    return this.hasFolder(".project")(dir);
+  }
+
+  public isRoot(dir: Dirent) {
+    return this.hasFolder(".root")(dir);
+  }
+
+  public isRootDir(dir: string) {
+    const files = readdirSync(dir);
+    return files.reduce<boolean>((prev, curr) => {
       if (prev) {
         return prev;
-      } else if (current === ".group") {
+      } else if (curr === ".root") {
         return true;
       } else {
         return false;
@@ -21,18 +32,20 @@ class FolderScaner {
     }, false);
   }
 
-  public isProject(dir: Dirent) {
-    const files = readdirSync(join(dir.parentPath, dir.name));
+  private hasFolder(dirName: string) {
+    return (dir: Dirent) => {
+      const files = readdirSync(join(dir.parentPath, dir.name));
 
-    return files.reduce<boolean>((prev, current) => {
-      if (prev) {
-        return prev;
-      } else if (current === ".project") {
-        return true;
-      } else {
-        return false;
-      }
-    }, false);
+      return files.reduce<boolean>((prev, current) => {
+        if (prev) {
+          return prev;
+        } else if (current === dirName) {
+          return true;
+        } else {
+          return false;
+        }
+      }, false);
+    };
   }
 
   public getAllGroups() {

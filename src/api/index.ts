@@ -5,4 +5,6 @@ export {
   getAllFiles,
   isGroup,
   isProject,
+  isRoot,
+  isRootDir,
 } from "../workingWithFile";

@@ -6,6 +6,9 @@
 
 .title {
   @apply px-2
-  pb-2
   text-lg;
+}
+
+.header {
+  @apply flex items-center pb-2;
 }

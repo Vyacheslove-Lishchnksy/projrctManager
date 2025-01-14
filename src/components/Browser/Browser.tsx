@@ -1,15 +1,19 @@
 import ImgSegment from "&/ImgSegment/ImgSegment";
 import { useSelector } from "react-redux";
 import styles from "./Browser.module.scss";
+import folderRootSVG from "@/folderRoot.svg";
 import folderPrigectSVG from "@/folderProject.svg";
 import folderGroupSVG from "@/folderGroup.svg";
+import folderSVG from "@/folder.svg";
+import backButton from "@/UnDo.svg";
 import { RootState } from "store/rootReduser";
 import { useEffect } from "react";
 import { useAppDispatch } from "store/configureStore";
 import { setFiles, setPath } from "store/brouser/borwser.slice";
-import { getAllFiles, isGroup } from "api/index";
-import { join } from "path";
+import { getAllFiles, isGroup, isProject, isRoot, isRootDir } from "api/index";
+import path, { join } from "path";
 import { Dirent } from "fs";
+import { IconButton } from "&/IconButton/IconButton";
 
 export function Browser() {
   const {
@@ -27,14 +31,23 @@ export function Browser() {
     }
   }, [currentDir, startPath, dispatch]);
 
+  console.log(files);
+
   const currentTree: Dirent[] = files.filter((file) => {
     return !file.name.startsWith(".");
   });
-  console.log(files, currentTree);
 
   return (
     <main className={styles.browser}>
-      <header>
+      <header className={styles.header}>
+        <IconButton
+          onClick={() => {
+            if (!isRootDir(currentDir)) {
+              dispatch(setPath(path.dirname(currentDir)));
+            }
+          }}
+          src={backButton}
+        />
         <h3 className={styles.title}>{currentDir}</h3>
       </header>
       <section>
@@ -58,7 +71,11 @@ export function Browser() {
 function getCurrentIcon(file: Dirent) {
   if (isGroup(file)) {
     return folderGroupSVG;
-  } else {
+  } else if (isProject(file)) {
     return folderPrigectSVG;
+  } else if (isRoot(file)) {
+    return folderRootSVG;
+  } else {
+    return folderSVG;
   }
 }
