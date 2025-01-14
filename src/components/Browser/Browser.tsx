@@ -5,6 +5,7 @@ import folderRootSVG from "@/folderRoot.svg";
 import folderPrigectSVG from "@/folderProject.svg";
 import folderGroupSVG from "@/folderGroup.svg";
 import folderSVG from "@/folder.svg";
+import fileSVG from "@/icon.svg";
 import backButton from "@/UnDo.svg";
 import { RootState } from "store/rootReduser";
 import { useEffect } from "react";
@@ -50,13 +51,15 @@ export function Browser() {
         />
         <h3 className={styles.title}>{currentDir}</h3>
       </header>
-      <section>
+      <section className={styles.borwserBody}>
         {currentTree.map((file) => {
           return (
             <ImgSegment
               src={getCurrentIcon(file)}
               onClick={() => {
-                dispatch(setPath(join(file.parentPath, file.name)));
+                if (file.isDirectory()) {
+                  dispatch(setPath(join(file.parentPath, file.name)));
+                }
               }}
             >
               {file.name}
@@ -75,7 +78,9 @@ function getCurrentIcon(file: Dirent) {
     return folderPrigectSVG;
   } else if (isRoot(file)) {
     return folderRootSVG;
-  } else {
+  } else if (file.isDirectory()) {
     return folderSVG;
+  } else {
+    return fileSVG;
   }
 }

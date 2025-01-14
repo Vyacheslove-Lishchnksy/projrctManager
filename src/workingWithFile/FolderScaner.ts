@@ -34,17 +34,21 @@ class FolderScaner {
 
   private hasFolder(dirName: string) {
     return (dir: Dirent) => {
-      const files = readdirSync(join(dir.parentPath, dir.name));
+      if (dir.isDirectory()) {
+        const files = readdirSync(join(dir.parentPath, dir.name));
 
-      return files.reduce<boolean>((prev, current) => {
-        if (prev) {
-          return prev;
-        } else if (current === dirName) {
-          return true;
-        } else {
-          return false;
-        }
-      }, false);
+        return files.reduce<boolean>((prev, current) => {
+          if (prev) {
+            return prev;
+          } else if (current === dirName) {
+            return true;
+          } else {
+            return false;
+          }
+        }, false);
+      } else {
+        return false;
+      }
     };
   }
 
