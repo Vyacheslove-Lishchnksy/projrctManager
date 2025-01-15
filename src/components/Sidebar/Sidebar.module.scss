@@ -4,19 +4,26 @@
   border-r-4
   border-primary-purple
   box-content
-  p-3;
+  overflow-auto;
 }
 
 .navigation {
   @apply flex
-  justify-between;
+  justify-between
+  top-0
+  pt-3
+  p-2
+  sticky
+  bg-fone-color;
 }
 
 .title {
   @apply text-xl
-  mr-10;
+  mr-8;
 }
 
 .list {
-  @apply py-4;
+  @apply px-2
+  pb-8
+  pt-2;
 }

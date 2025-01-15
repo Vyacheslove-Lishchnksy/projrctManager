@@ -14,7 +14,7 @@ import { join } from "path";
 
 export function Sidebar() {
   const {
-    groupsReduser: { groups, currentGroup },
+    groupsReduser: { groups },
   } = useSelector((state: RootState) => state);
   const dispatch = useAppDispatch();
   useEffect(() => {
@@ -37,7 +37,6 @@ export function Sidebar() {
                 dispatch(setCurrentGroup(group.name));
                 dispatch(setPath(join(group.parentPath, group.name)));
               }}
-              isActive={group.name === currentGroup}
             >
               {group.name}
             </Section>

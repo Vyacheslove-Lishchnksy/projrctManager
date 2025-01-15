@@ -1,12 +1,14 @@
 import { Dirent } from "fs";
 import FolderScaner from "./FolderScaner";
 import Constnts from "./Setttings";
+import TemplateScaner from "./TemplateScaner";
 
 function setRootFolder(folderPath: string) {
   Constnts.Settings.rootFolder = folderPath;
 }
 
 const scaner = new FolderScaner(Constnts.Settings.rootFolder);
+const templates = new TemplateScaner(Constnts.Settings.rootFolder);
 
 function getAllGroups() {
   return scaner.getAllGroups();
@@ -32,8 +34,16 @@ function isRoot(dir: Dirent) {
   return scaner.isRoot(dir);
 }
 
+function isRootFolder(dir: Dirent) {
+  return scaner.isRootFolder(dir);
+}
+
 function isRootDir(dir: string) {
   return scaner.isRootDir(dir);
+}
+
+function getAllTemplates() {
+  return templates.getAllTemplates();
 }
 
 export {
@@ -44,5 +54,7 @@ export {
   isGroup,
   isProject,
   isRoot,
+  isRootFolder,
   isRootDir,
+  getAllTemplates,
 };

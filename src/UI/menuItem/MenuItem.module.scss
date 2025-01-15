@@ -1,16 +1,13 @@
-.section {
+.item {
   @apply my-0.5
-  text-xl
+  text-base
   p-1
   px-2
-  rounded-lg
+  pr-10
   cursor-pointer
   overflow-hidden
   overflow-ellipsis
   whitespace-nowrap
+  rounded-lg
   hover:bg-slate-800;
-}
-
-.active {
-  @apply bg-slate-700;
 }

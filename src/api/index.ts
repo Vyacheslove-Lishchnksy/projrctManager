@@ -6,5 +6,7 @@ export {
   isGroup,
   isProject,
   isRoot,
+  isRootFolder,
   isRootDir,
+  getAllTemplates,
 } from "../workingWithFile";

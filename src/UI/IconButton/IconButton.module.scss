@@ -1,5 +1,6 @@
 .icon {
   @apply w-6
   hover:bg-slate-800
-  rounded-sm;
+  rounded-sm
+  select-none;
 }

@@ -19,6 +19,10 @@ class FolderScaner {
     return this.hasFolder(".root")(dir);
   }
 
+  public isRootFolder(dir: Dirent) {
+    return this.hasFolder(".rootFolder")(dir);
+  }
+
   public isRootDir(dir: string) {
     const files = readdirSync(dir);
     return files.reduce<boolean>((prev, curr) => {

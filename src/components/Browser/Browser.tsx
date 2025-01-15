@@ -1,20 +1,28 @@
-import ImgSegment from "&/ImgSegment/ImgSegment";
-import { useSelector } from "react-redux";
 import styles from "./Browser.module.scss";
-import folderRootSVG from "@/folderRoot.svg";
-import folderPrigectSVG from "@/folderProject.svg";
-import folderGroupSVG from "@/folderGroup.svg";
-import folderSVG from "@/folder.svg";
-import fileSVG from "@/icon.svg";
-import backButton from "@/UnDo.svg";
+
+import backButtonSVG from "@/UnDo.svg";
+
 import { RootState } from "store/rootReduser";
 import { useEffect } from "react";
 import { useAppDispatch } from "store/configureStore";
 import { setFiles, setPath } from "store/brouser/borwser.slice";
-import { getAllFiles, isGroup, isProject, isRoot, isRootDir } from "api/index";
+import { useSelector } from "react-redux";
+
 import path, { join } from "path";
 import { Dirent } from "fs";
+
+import { getAllFiles, isRootDir } from "api/index";
+
 import { IconButton } from "&/IconButton/IconButton";
+import ImgSegment from "&/ImgSegment/ImgSegment";
+import VoidResult from "./VoidResalt";
+
+import { getCurrentIcon } from "./getCurrentIcon";
+import { ContexMenu } from "./ContexMenu";
+import {
+  setPosition,
+  showContextMenu,
+} from "store/contextMenu/contextMenu.slice";
 
 export function Browser() {
   const {
@@ -32,14 +40,13 @@ export function Browser() {
     }
   }, [currentDir, startPath, dispatch]);
 
-  console.log(files);
-
   const currentTree: Dirent[] = files.filter((file) => {
     return !file.name.startsWith(".");
   });
 
   return (
     <main className={styles.browser}>
+      <ContexMenu />
       <header className={styles.header}>
         <IconButton
           onClick={() => {
@@ -47,40 +54,37 @@ export function Browser() {
               dispatch(setPath(path.dirname(currentDir)));
             }
           }}
-          src={backButton}
+          src={backButtonSVG}
         />
         <h3 className={styles.title}>{currentDir}</h3>
       </header>
-      <section className={styles.borwserBody}>
-        {currentTree.map((file) => {
-          return (
-            <ImgSegment
-              src={getCurrentIcon(file)}
-              onClick={() => {
-                if (file.isDirectory()) {
-                  dispatch(setPath(join(file.parentPath, file.name)));
-                }
-              }}
-            >
-              {file.name}
-            </ImgSegment>
-          );
-        })}
+      <section
+        onContextMenu={(event) => {
+          event.preventDefault();
+          dispatch(setPosition({ x: event.pageX, y: event.pageY }));
+          dispatch(showContextMenu());
+        }}
+        className={styles.borwserBody}
+      >
+        {currentTree.length !== 0 ? (
+          currentTree.map((file) => {
+            return (
+              <ImgSegment
+                src={getCurrentIcon(file)}
+                onClick={() => {
+                  if (file.isDirectory()) {
+                    dispatch(setPath(join(file.parentPath, file.name)));
+                  }
+                }}
+              >
+                {file.name}
+              </ImgSegment>
+            );
+          })
+        ) : (
+          <VoidResult />
+        )}
       </section>
     </main>
   );
-}
-
-function getCurrentIcon(file: Dirent) {
-  if (isGroup(file)) {
-    return folderGroupSVG;
-  } else if (isProject(file)) {
-    return folderPrigectSVG;
-  } else if (isRoot(file)) {
-    return folderRootSVG;
-  } else if (file.isDirectory()) {
-    return folderSVG;
-  } else {
-    return fileSVG;
-  }
 }

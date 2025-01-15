@@ -14,5 +14,5 @@ export function Section({ children, isActive, onClick }: ISectionProps) {
 interface ISectionProps {
   children: string;
   isActive?: boolean;
-  onClick: () => void;
+  onClick?: () => void;
 }
