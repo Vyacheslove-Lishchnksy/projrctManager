@@ -1,0 +1,59 @@
+.popup {
+  @apply absolute
+  flex
+  flex-col
+  justify-center
+  items-start
+  pt-12
+  pb-16
+  px-4
+  rounded-lg
+  border-black
+  border-solid
+  border-0.5
+  bg-slate-900
+  top-52
+  left-72
+  w-52
+  h-10
+  opacity-0;
+  animation: fadeOut 0.2s ease-in;
+
+  &_active {
+    @apply opacity-100;
+    animation: fadeIn 0.25s ease-in;
+  }
+
+  &__input {
+    @apply text-black
+    px-2
+    border-2
+    border-purple-950
+    w-full
+    rounded-md;
+  }
+
+  &__title {
+    @apply pl-0.5
+    pb-1;
+  }
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    display: flex;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}

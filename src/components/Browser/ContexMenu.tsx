@@ -8,7 +8,11 @@ import {
   hideContextMenu,
   reloadPosition,
 } from "store/contextMenu/contextMenu.slice";
-import { MenuItem } from "&/menuItem/menuItem";
+import { MenuItem } from "&/MenuItem/MenuItem";
+import {
+  setNewFolderInputPosition,
+  showNewFolderInput,
+} from "store/newFolderInput/newFolderInput.slice";
 
 export function ContexMenu() {
   const dispatch = useAppDispatch();
@@ -34,7 +38,6 @@ export function ContexMenu() {
 
   useEffect(() => {
     document.addEventListener("click", handleClickOutside);
-
     return () => {
       document.removeEventListener("click", handleClickOutside);
     };
@@ -48,7 +51,18 @@ export function ContexMenu() {
       }`}
       style={{ top: position.y, left: position.x }}
     >
-      <MenuItem>New folder</MenuItem>
+      <MenuItem
+        onClick={(event) => {
+          dispatch(
+            setNewFolderInputPosition({ x: event.pageX, y: event.pageY })
+          );
+          dispatch(hideContextMenu());
+          dispatch(reloadPosition());
+          dispatch(showNewFolderInput());
+        }}
+      >
+        New folder
+      </MenuItem>
     </menu>
   );
 }

@@ -1,8 +1,9 @@
+import { MouseEventHandler } from "react";
 import styles from "./MenuItem.module.scss";
 
 export function MenuItem({ children, onClick }: ISectionProps) {
   return (
-    <li className={`${styles.item}`} onClick={onClick}>
+    <li className={`${styles.item}`} onClick={onClick ?? (() => {})}>
       {children}
     </li>
   );
@@ -10,5 +11,5 @@ export function MenuItem({ children, onClick }: ISectionProps) {
 
 interface ISectionProps {
   children: string;
-  onClick?: () => void;
+  onClick?: MouseEventHandler<HTMLLIElement>;
 }

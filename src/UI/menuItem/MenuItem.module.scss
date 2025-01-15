@@ -1,13 +1,13 @@
 .item {
   @apply my-0.5
   text-base
-  p-1
-  px-2
-  pr-10
+  p-0.5
+  pl-2
+  pr-20
   cursor-pointer
   overflow-hidden
   overflow-ellipsis
   whitespace-nowrap
-  rounded-lg
+  rounded-md
   hover:bg-slate-800;
 }

@@ -16,13 +16,15 @@ import { getAllFiles, isRootDir } from "api/index";
 import { IconButton } from "&/IconButton/IconButton";
 import ImgSegment from "&/ImgSegment/ImgSegment";
 import VoidResult from "./VoidResalt";
+import { ContexMenu } from "./ContexMenu";
 
 import { getCurrentIcon } from "./getCurrentIcon";
-import { ContexMenu } from "./ContexMenu";
 import {
   setPosition,
   showContextMenu,
 } from "store/contextMenu/contextMenu.slice";
+
+import { PopupInput } from "&/PopupInput/PopupInput";
 
 export function Browser() {
   const {
@@ -46,6 +48,7 @@ export function Browser() {
 
   return (
     <main className={styles.browser}>
+      <PopupInput name="popup" title="Enter a folder name" />
       <ContexMenu />
       <header className={styles.header}>
         <IconButton
