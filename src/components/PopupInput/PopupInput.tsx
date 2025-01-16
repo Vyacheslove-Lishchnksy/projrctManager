@@ -2,35 +2,23 @@ import { useRef } from "react";
 import styles from "./PopupInput.module.scss";
 import { useSelector } from "react-redux";
 import { RootState } from "store/rootReduser";
-import {
-  setNewFolderInputValue as setValue,
-  hideNewFolderInput as hide,
-  reloadNewFolderInputPosition as reloadPosition,
-} from "store/newFolderInput/newFolderInput.slice";
-import { useAppDispatch } from "store/configureStore";
 
-export function PopupInput({ name, title }: IPopupInputProps) {
+export function PopupInput({ name, title, newAction }: IPopupInputProps) {
   const {
     newFolderInputReduser: { isActive, position },
   } = useSelector((state: RootState) => state);
 
-  const dispatch = useAppDispatch();
-
-  const value = "";
+  let value = "";
   const targetRef = useRef<HTMLDivElement>(null);
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === "Enter") {
-      dispatch(setValue(value));
-      dispatch(hide());
-      setTimeout(() => {
-        dispatch(reloadPosition());
-      });
+      newAction(value);
     }
   };
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setValue(event.target.value);
+    value = event.target.value;
   };
 
   return (
@@ -57,4 +45,5 @@ interface IPopupInputProps {
   name: string;
   title: string;
   onClick?: () => void;
+  newAction: (value: string) => void;
 }

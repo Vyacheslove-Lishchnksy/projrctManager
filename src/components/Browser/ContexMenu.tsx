@@ -2,19 +2,14 @@ import styles from "./Browser.module.scss";
 
 import { useSelector } from "react-redux";
 import { RootState, useAppDispatch } from "store/configureStore";
-import { useEffect, useRef } from "react";
+import { ReactNode, useEffect, useRef } from "react";
 
 import {
   hideContextMenu,
   reloadPosition,
 } from "store/contextMenu/contextMenu.slice";
-import { MenuItem } from "&/MenuItem/MenuItem";
-import {
-  setNewFolderInputPosition,
-  showNewFolderInput,
-} from "store/newFolderInput/newFolderInput.slice";
 
-export function ContexMenu() {
+export function ContexMenu({ children }: IContextMenuPProps) {
   const dispatch = useAppDispatch();
 
   const {
@@ -24,6 +19,7 @@ export function ContexMenu() {
   const targetRef = useRef<HTMLDivElement>(null);
 
   const handleClickOutside = (event: MouseEvent) => {
+    console.log(targetRef, event.target as Node);
     if (
       targetRef.current &&
       !targetRef.current.contains(event.target as Node)
@@ -51,18 +47,11 @@ export function ContexMenu() {
       }`}
       style={{ top: position.y, left: position.x }}
     >
-      <MenuItem
-        onClick={(event) => {
-          dispatch(
-            setNewFolderInputPosition({ x: event.pageX, y: event.pageY })
-          );
-          dispatch(hideContextMenu());
-          dispatch(reloadPosition());
-          dispatch(showNewFolderInput());
-        }}
-      >
-        New folder
-      </MenuItem>
+      {children}
     </menu>
   );
+}
+
+interface IContextMenuPProps {
+  children: ReactNode;
 }

@@ -5,13 +5,16 @@ import backButtonSVG from "@/UnDo.svg";
 import { RootState } from "store/rootReduser";
 import { useEffect } from "react";
 import { useAppDispatch } from "store/configureStore";
-import { setFiles, setPath } from "store/brouser/borwser.slice";
+import { addFile, setFiles, setPath } from "store/brouser/borwser.slice";
 import { useSelector } from "react-redux";
 
-import path, { join } from "path";
-import { Dirent } from "fs";
-
-import { getAllFiles, isRootDir } from "api/index";
+import {
+  getAllFiles,
+  getAllTemplates,
+  isDirectory,
+  isRootDir,
+  makeFolder,
+} from "api/index";
 
 import { IconButton } from "&/IconButton/IconButton";
 import ImgSegment from "&/ImgSegment/ImgSegment";
@@ -20,16 +23,33 @@ import { ContexMenu } from "./ContexMenu";
 
 import { getCurrentIcon } from "./getCurrentIcon";
 import {
+  hideContextMenu,
+  reloadPosition,
   setPosition,
   showContextMenu,
 } from "store/contextMenu/contextMenu.slice";
 
-import { PopupInput } from "&/PopupInput/PopupInput";
+import { PopupInput } from "../PopupInput/PopupInput";
+import path, { join } from "path";
+import {
+  hideNewFolderInput,
+  reloadNewFolderInputPosition,
+  setNewFolderInputPosition,
+  showNewFolderInput,
+} from "store/newFolderInput/newFolderInput.slice";
+import { MenuItem } from "&/MenuItem/MenuItem";
+import {
+  setTemplateContextMenuPosition,
+  setTemplates,
+  showTemplateContextMenu,
+} from "store/templateContextMenu/templateContextMenu";
+import { TemplateContexMenu } from "./TemplateContexMenu";
 
 export function Browser() {
   const {
     browserReduser: { currentDir, files },
     settingsReduser: { startPath },
+    templateContextMenuReduser: { templates },
   } = useSelector((state: RootState) => state);
 
   const dispatch = useAppDispatch();
@@ -41,15 +61,66 @@ export function Browser() {
       dispatch(setFiles(getAllFiles(currentDir)));
     }
   }, [currentDir, startPath, dispatch]);
+  useEffect(() => {
+    dispatch(
+      setTemplates(
+        getAllTemplates().filter((template) => !template.name.startsWith("."))
+      )
+    );
+  }, [templates.length]);
 
-  const currentTree: Dirent[] = files.filter((file) => {
-    return !file.name.startsWith(".");
+  const currentTree: string[] = files.filter((file) => {
+    return !path.basename(file).startsWith(".");
   });
 
   return (
     <main className={styles.browser}>
-      <PopupInput name="popup" title="Enter a folder name" />
-      <ContexMenu />
+      <PopupInput
+        name="popup"
+        title="Enter a name"
+        newAction={(value) => {
+          makeFolder(join(currentDir, value));
+          if (value) {
+            dispatch(addFile(join(currentDir, value)));
+          }
+          dispatch(hideNewFolderInput());
+          setTimeout(() => {
+            dispatch(reloadNewFolderInputPosition());
+          });
+        }}
+      />
+      <ContexMenu>
+        <MenuItem
+          onClick={(event) => {
+            dispatch(
+              setNewFolderInputPosition({ x: event.pageX, y: event.pageY })
+            );
+            dispatch(hideContextMenu());
+            dispatch(reloadPosition());
+            dispatch(showNewFolderInput());
+          }}
+        >
+          New folder
+        </MenuItem>
+        <MenuItem
+          onClick={(event) => {
+            dispatch(
+              setTemplateContextMenuPosition({ x: event.pageX, y: event.pageY })
+            );
+            dispatch(hideContextMenu());
+            dispatch(reloadPosition());
+            dispatch(showTemplateContextMenu());
+          }}
+        >
+          New folder by template
+        </MenuItem>
+      </ContexMenu>
+      <TemplateContexMenu>
+        {templates.map((item) => {
+          return <MenuItem key={item.name}>{item.name}</MenuItem>;
+        })}
+      </TemplateContexMenu>
+
       <header className={styles.header}>
         <IconButton
           onClick={() => {
@@ -73,14 +144,22 @@ export function Browser() {
           currentTree.map((file) => {
             return (
               <ImgSegment
+                key={file}
                 src={getCurrentIcon(file)}
                 onClick={() => {
-                  if (file.isDirectory()) {
-                    dispatch(setPath(join(file.parentPath, file.name)));
+                  if (isDirectory(file)) {
+                    dispatch(setPath(file));
                   }
                 }}
+                text={(() => {
+                  const index = file.lastIndexOf(".");
+                  if (index !== -1) {
+                    return file.slice(index + 1, file.length);
+                  }
+                  return "";
+                })()}
               >
-                {file.name}
+                {path.basename(file)}
               </ImgSegment>
             );
           })

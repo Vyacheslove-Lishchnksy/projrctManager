@@ -7,6 +7,8 @@ export {
   isProject,
   isRoot,
   isRootFolder,
+  isDirectory,
   isRootDir,
   getAllTemplates,
+  makeFolder,
 } from "../workingWithFile";

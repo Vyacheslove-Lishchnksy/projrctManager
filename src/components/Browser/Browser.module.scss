@@ -26,6 +26,7 @@
   px-3
   sticky 
   top-0
+  z-50
   bg-fone-color;
 }
 
@@ -47,7 +48,8 @@ bg-slate-900
   rounded-lg
   p-1
   pb-6
-  opacity-0;
+  opacity-0
+  z-40;
   animation: fadeOut 0.2s ease-in;
 
   &_active {

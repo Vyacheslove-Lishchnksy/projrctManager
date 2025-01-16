@@ -1,4 +1,4 @@
-import { Dirent, readdirSync } from "fs";
+import { readdirSync, statSync } from "fs";
 import { join } from "path";
 
 class FolderScaner {
@@ -7,20 +7,25 @@ class FolderScaner {
     this.rootDir = dir;
   }
 
-  public isGroup(dir: Dirent) {
+  public isGroup(dir: string) {
     return this.hasFolder(".group")(dir);
   }
 
-  public isProject(dir: Dirent) {
+  public isProject(dir: string) {
     return this.hasFolder(".project")(dir);
   }
 
-  public isRoot(dir: Dirent) {
+  public isRoot(dir: string) {
     return this.hasFolder(".root")(dir);
   }
 
-  public isRootFolder(dir: Dirent) {
+  public isRootFolder(dir: string) {
     return this.hasFolder(".rootFolder")(dir);
+  }
+
+  public isDirectory(dir: string) {
+    const stat = statSync(dir);
+    return stat.isDirectory();
   }
 
   public isRootDir(dir: string) {
@@ -37,9 +42,10 @@ class FolderScaner {
   }
 
   private hasFolder(dirName: string) {
-    return (dir: Dirent) => {
-      if (dir.isDirectory()) {
-        const files = readdirSync(join(dir.parentPath, dir.name));
+    return (path: string) => {
+      const stat = statSync(path);
+      if (stat.isDirectory()) {
+        const files = readdirSync(path);
 
         return files.reduce<boolean>((prev, current) => {
           if (prev) {
@@ -59,7 +65,9 @@ class FolderScaner {
   public getAllGroups() {
     const files = readdirSync(this.rootDir, { withFileTypes: true });
     const directorys = files.filter((item) => item.isDirectory());
-    const groups = directorys.filter((dir) => this.isGroup(dir));
+    const groups = directorys.filter((dir) =>
+      this.isGroup(join(dir.parentPath, dir.name))
+    );
 
     return groups;
   }
@@ -67,16 +75,19 @@ class FolderScaner {
   public getAllProjects(directory: string) {
     const files = readdirSync(directory, { withFileTypes: true });
     const directorys = files.filter((item) => item.isDirectory());
-    const groups = directorys.filter((dir) => this.isProject(dir));
+    const groups = directorys.filter((dir) =>
+      this.isProject(join(dir.parentPath, dir.name))
+    );
 
     return groups.map((dir) => dir.name);
   }
 
   public getAllFiles(directory: string) {
-    const files = readdirSync(directory, { withFileTypes: true });
-    return files.filter((file) => {
+    let files = readdirSync(directory, { withFileTypes: true });
+    files = files.filter((file) => {
       return file.name !== "desktop.ini";
     });
+    return files.map((file) => join(file.parentPath, file.name));
   }
 }
 

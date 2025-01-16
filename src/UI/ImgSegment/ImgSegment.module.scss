@@ -1,14 +1,33 @@
 .icon {
   @apply h-6
   mr-4
-  select-none;
+  select-none
+  relative
+  z-10;
 }
 
 .section {
   @apply flex
+  justify-between
+  relative
   items-center
   p-2
   hover:bg-slate-800
   rounded-lg
   cursor-pointer;
+}
+
+.text {
+  @apply absolute
+  top-3
+  z-20
+  text-black;
+}
+
+.trashIcon {
+  @apply h-6;
+}
+
+.name {
+  @apply flex-1;
 }

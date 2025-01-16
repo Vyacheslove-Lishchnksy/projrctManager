@@ -1,7 +1,7 @@
-import { Dirent } from "fs";
 import FolderScaner from "./FolderScaner";
 import Constnts from "./Setttings";
 import TemplateScaner from "./TemplateScaner";
+import Folder from "./Folder";
 
 function setRootFolder(folderPath: string) {
   Constnts.Settings.rootFolder = folderPath;
@@ -22,19 +22,23 @@ function getAllFiles(path: string) {
   return scaner.getAllFiles(path);
 }
 
-function isGroup(dir: Dirent) {
+function isGroup(dir: string) {
   return scaner.isGroup(dir);
 }
 
-function isProject(dir: Dirent) {
+function isProject(dir: string) {
   return scaner.isProject(dir);
 }
 
-function isRoot(dir: Dirent) {
+function isRoot(dir: string) {
   return scaner.isRoot(dir);
 }
 
-function isRootFolder(dir: Dirent) {
+function isDirectory(dir: string) {
+  return scaner.isDirectory(dir);
+}
+
+function isRootFolder(dir: string) {
   return scaner.isRootFolder(dir);
 }
 
@@ -46,6 +50,10 @@ function getAllTemplates() {
   return templates.getAllTemplates();
 }
 
+function makeFolder(path: string) {
+  return Folder.makeFolder(path);
+}
+
 export {
   setRootFolder,
   getAllGroups,
@@ -55,6 +63,8 @@ export {
   isProject,
   isRoot,
   isRootFolder,
+  isDirectory,
   isRootDir,
   getAllTemplates,
+  makeFolder,
 };
