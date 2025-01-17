@@ -54,6 +54,10 @@ function makeFolder(path: string) {
   return Folder.makeFolder(path);
 }
 
+function removeFolder(path: string) {
+  return Folder.removeFolder(path);
+}
+
 export {
   setRootFolder,
   getAllGroups,
@@ -67,4 +71,5 @@ export {
   isRootDir,
   getAllTemplates,
   makeFolder,
+  removeFolder,
 };

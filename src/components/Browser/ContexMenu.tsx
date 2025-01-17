@@ -8,6 +8,10 @@ import {
   hideContextMenu,
   reloadPosition,
 } from "store/contextMenu/contextMenu.slice";
+import {
+  hideTemplateContextMenu,
+  reloadTemplateContextMenuPosition,
+} from "store/templateContextMenu/templateContextMenu";
 
 export function ContexMenu({ children }: IContextMenuPProps) {
   const dispatch = useAppDispatch();
@@ -26,8 +30,10 @@ export function ContexMenu({ children }: IContextMenuPProps) {
     ) {
       event.preventDefault();
       dispatch(hideContextMenu());
+      dispatch(hideTemplateContextMenu());
       setTimeout(() => {
         dispatch(reloadPosition());
+        dispatch(reloadTemplateContextMenuPosition());
       }, 250);
     }
   };

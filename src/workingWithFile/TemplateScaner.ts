@@ -4,19 +4,35 @@ import Template from "./Template";
 
 class TemplateScaner {
   private rootTemplatePath: string;
+  private templates: Template[] = [];
 
   constructor(rootPath: string) {
     this.rootTemplatePath = join(rootPath, "Templates");
   }
 
+  public initTemplate(dirPath: string, template: string, name: string) {
+    const currentTemplate = this.templates.find(
+      (item) => item.name === template
+    );
+    if (!!currentTemplate) {
+      currentTemplate.init(dirPath, name);
+    }
+  }
+
   public getAllTemplates() {
-    const folders = readdirSync(this.rootTemplatePath, { withFileTypes: true });
-    return folders.map((folder) => {
-      return new Template(
-        folder.name,
-        this.newPaths(join(folder.parentPath, folder.name))
-      );
-    });
+    if (this.templates.length <= 0) {
+      const folders = readdirSync(this.rootTemplatePath, {
+        withFileTypes: true,
+      });
+      this.templates = folders.map((folder) => {
+        return new Template(
+          folder.name,
+          this.newPaths(join(folder.parentPath, folder.name))
+        );
+      });
+    }
+
+    return this.templates;
   }
 
   private newPaths(

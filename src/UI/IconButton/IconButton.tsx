@@ -1,3 +1,4 @@
+import { MouseEventHandler } from "react";
 import styles from "./IconButton.module.scss";
 
 export function IconButton({ src, onClick }: IIconButtonProps) {
@@ -10,5 +11,5 @@ export function IconButton({ src, onClick }: IIconButtonProps) {
 
 interface IIconButtonProps {
   src: string;
-  onClick?: () => void;
+  onClick?: MouseEventHandler;
 }

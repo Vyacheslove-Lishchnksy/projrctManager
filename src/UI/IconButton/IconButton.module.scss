@@ -1,8 +1,10 @@
 .icon {
   @apply w-6
-  hover:bg-slate-800
   rounded-sm
   select-none;
+  &:hover {
+    filter: drop-shadow(1px 1px 1px rgba(161, 161, 161, 0.5));
+  }
 }
 
 .text {

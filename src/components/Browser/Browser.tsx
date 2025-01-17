@@ -90,6 +90,11 @@ export function Browser() {
         }}
       />
       <ContexMenu>
+        <TemplateContexMenu>
+          {templates.map((item) => {
+            return <MenuItem key={item.name}>{item.name}</MenuItem>;
+          })}
+        </TemplateContexMenu>
         <MenuItem
           onClick={(event) => {
             dispatch(
@@ -103,23 +108,14 @@ export function Browser() {
           New folder
         </MenuItem>
         <MenuItem
-          onClick={(event) => {
-            dispatch(
-              setTemplateContextMenuPosition({ x: event.pageX, y: event.pageY })
-            );
-            dispatch(hideContextMenu());
-            dispatch(reloadPosition());
+          onClick={() => {
+            dispatch(setTemplateContextMenuPosition({ x: 220, y: 40 }));
             dispatch(showTemplateContextMenu());
           }}
         >
           New folder by template
         </MenuItem>
       </ContexMenu>
-      <TemplateContexMenu>
-        {templates.map((item) => {
-          return <MenuItem key={item.name}>{item.name}</MenuItem>;
-        })}
-      </TemplateContexMenu>
 
       <header className={styles.header}>
         <IconButton
@@ -158,6 +154,12 @@ export function Browser() {
                   }
                   return "";
                 })()}
+                onClickSideButton={(event) => {
+                  event.preventDefault();
+                  // dispatch(setFiles(files.filter((item) => item !== file)));
+                  // removeFolder(file);
+                  event.stopPropagation();
+                }}
               >
                 {path.basename(file)}
               </ImgSegment>
