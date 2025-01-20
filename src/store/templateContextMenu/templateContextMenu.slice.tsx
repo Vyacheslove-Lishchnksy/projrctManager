@@ -58,6 +58,7 @@ export const {
     hideTemplateContextMenu,
     reloadTemplateContextMenuPosition,
     setTemplates,
+    addTemplate,
   },
   reducer: templateContextMenuReduser,
 } = templateContextMenuSlice;

@@ -1,4 +1,4 @@
-import { readdirSync } from "fs";
+import { mkdirSync, readdirSync } from "fs";
 import { join, relative } from "path";
 import Template from "./Template";
 
@@ -15,7 +15,8 @@ class TemplateScaner {
       (item) => item.name === template
     );
     if (!!currentTemplate) {
-      currentTemplate.init(dirPath, name);
+      mkdirSync(join(dirPath, name));
+      currentTemplate.init(join(dirPath, name));
     }
   }
 

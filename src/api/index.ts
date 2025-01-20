@@ -12,4 +12,5 @@ export {
   isRootDir,
   makeFolder,
   removeFolder,
+  initTemplate,
 } from "../workingWithFile";

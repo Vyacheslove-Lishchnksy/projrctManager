@@ -3,8 +3,6 @@ import { accessSync, mkdirSync, rmSync, statSync } from "fs";
 class Folder {
   public static makeFolder(path: string) {
     try {
-      console.log(path);
-
       accessSync(path);
     } catch (error) {
       mkdirSync(path);

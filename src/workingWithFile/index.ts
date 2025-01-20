@@ -50,6 +50,10 @@ function getAllTemplates() {
   return templates.getAllTemplates();
 }
 
+function initTemplate(dirPath: string, template: string, name: string) {
+  return templates.initTemplate(dirPath, template, name);
+}
+
 function makeFolder(path: string) {
   return Folder.makeFolder(path);
 }
@@ -72,4 +76,5 @@ export {
   getAllTemplates,
   makeFolder,
   removeFolder,
+  initTemplate,
 };

@@ -11,6 +11,7 @@ import { useSelector } from "react-redux";
 import {
   getAllFiles,
   getAllTemplates,
+  initTemplate,
   isDirectory,
   isRootDir,
   makeFolder,
@@ -42,7 +43,7 @@ import {
   setTemplateContextMenuPosition,
   setTemplates,
   showTemplateContextMenu,
-} from "store/templateContextMenu/templateContextMenu";
+} from "store/templateContextMenu/templateContextMenu.slice";
 import { TemplateContexMenu } from "./TemplateContexMenu";
 
 export function Browser() {
@@ -92,7 +93,17 @@ export function Browser() {
       <ContexMenu>
         <TemplateContexMenu>
           {templates.map((item) => {
-            return <MenuItem key={item.name}>{item.name}</MenuItem>;
+            return (
+              <MenuItem
+                onClick={() => {
+                  initTemplate(currentDir, item.name, item.name);
+                  dispatch(addFile(join(currentDir, item.name)));
+                }}
+                key={item.name}
+              >
+                {item.name}
+              </MenuItem>
+            );
           })}
         </TemplateContexMenu>
         <MenuItem

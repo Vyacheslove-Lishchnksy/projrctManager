@@ -11,7 +11,7 @@ import {
 import {
   hideTemplateContextMenu,
   reloadTemplateContextMenuPosition,
-} from "store/templateContextMenu/templateContextMenu";
+} from "store/templateContextMenu/templateContextMenu.slice";
 
 export function ContexMenu({ children }: IContextMenuPProps) {
   const dispatch = useAppDispatch();
@@ -23,7 +23,6 @@ export function ContexMenu({ children }: IContextMenuPProps) {
   const targetRef = useRef<HTMLDivElement>(null);
 
   const handleClickOutside = (event: MouseEvent) => {
-    console.log(targetRef, event.target as Node);
     if (
       targetRef.current &&
       !targetRef.current.contains(event.target as Node)

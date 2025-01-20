@@ -1,6 +1,7 @@
 import { IconButton } from "&/IconButton/IconButton";
 import styles from "./ImgSegment.module.scss";
 import trashSVG from "@/trash.svg";
+import paintSVG from "@/paint.svg";
 
 function ImgSegment({
   children,
@@ -19,6 +20,7 @@ function ImgSegment({
       </p>
       <img className={styles.icon} src={src} alt="" />
       <p className={styles.name}>{children}</p>
+      <IconButton src={paintSVG} onClick={onClickSineButton} />
       <IconButton src={trashSVG} onClick={onClickSineButton} />
     </article>
   );

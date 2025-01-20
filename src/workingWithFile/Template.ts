@@ -10,12 +10,12 @@ class Template {
     this.paths = paths;
   }
 
-  public init(dirPath: string, name: string) {
+  public init(dirPath: string) {
     this.paths.forEach((path) => {
       if (path.endsWith("\\")) {
-        mkdirSync(join(dirPath, name), { recursive: true });
+        mkdirSync(join(dirPath, path), { recursive: true });
       } else {
-        writeFileSync(join(dirPath, name), "");
+        writeFileSync(join(dirPath, path), "");
       }
     });
   }
