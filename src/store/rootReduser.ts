@@ -5,6 +5,7 @@ import { browserReduser } from "./brouser/borwser.slice.ts";
 import { contextMenuReduser } from "./contextMenu/contextMenu.slice.ts";
 import { newFolderInputReduser } from "./newFolderInput/newFolderInput.slice.ts";
 import { templateContextMenuReduser } from "./templateContextMenu/templateContextMenu.slice.tsx";
+import { customInputsReduser } from "./input/inputs.slice.ts";
 
 export const rootReducer = combineReducers({
   settingsReduser,
@@ -13,6 +14,7 @@ export const rootReducer = combineReducers({
   contextMenuReduser,
   newFolderInputReduser,
   templateContextMenuReduser,
+  customInputsReduser,
 });
 
 export type RootState = ReturnType<typeof rootReducer>;

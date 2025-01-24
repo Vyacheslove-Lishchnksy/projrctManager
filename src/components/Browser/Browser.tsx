@@ -45,12 +45,15 @@ import {
   showTemplateContextMenu,
 } from "store/templateContextMenu/templateContextMenu.slice";
 import { TemplateContexMenu } from "./TemplateContexMenu";
+import { CustomInput } from "&/CastomInput/CustomInput";
+import { clearInputs } from "store/input/inputs.slice";
 
 export function Browser() {
   const {
     browserReduser: { currentDir, files },
     settingsReduser: { startPath },
     templateContextMenuReduser: { templates },
+    customInputsReduser: { inputs },
   } = useSelector((state: RootState) => state);
 
   const dispatch = useAppDispatch();
@@ -70,9 +73,30 @@ export function Browser() {
     );
   }, [templates.length]);
 
-  const currentTree: string[] = files.filter((file) => {
+  const input = inputs.find((file) => file.name === "search");
+  let currentTree: string[] = files.filter((file) => {
     return !path.basename(file).startsWith(".");
   });
+  useEffect(() => {}, [input?.lastValue, currentTree]);
+
+  if (input?.lastValue) {
+    currentTree = currentTree.filter((file) => {
+      return path
+        .basename(file)
+        .toLocaleLowerCase()
+        .includes(input.lastValue.toLocaleLowerCase());
+    });
+    currentTree = currentTree.sort((file) => {
+      return path
+        .basename(file)
+        .localeCompare(input.lastValue, undefined, { sensitivity: "base" }) ===
+        0
+        ? 0
+        : -1;
+    });
+  }
+
+  console.log(currentTree);
 
   return (
     <main className={styles.browser}>
@@ -138,6 +162,7 @@ export function Browser() {
           src={backButtonSVG}
         />
         <h3 className={styles.title}>{currentDir}</h3>
+        <CustomInput name="search" placeholder="search..." type="text" />
       </header>
       <section
         onContextMenu={(event) => {
@@ -156,6 +181,7 @@ export function Browser() {
                 onClick={() => {
                   if (isDirectory(file)) {
                     dispatch(setPath(file));
+                    dispatch(clearInputs());
                   }
                 }}
                 text={(() => {
