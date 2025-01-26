@@ -5,8 +5,27 @@ import backButtonSVG from "@/UnDo.svg";
 import { RootState } from "store/rootReduser";
 import { useEffect } from "react";
 import { useAppDispatch } from "store/configureStore";
-import { addFile, setFiles, setPath } from "store/brouser/borwser.slice";
 import { useSelector } from "react-redux";
+
+import { addFile, setFiles, setPath } from "store/brouser/borwser.slice";
+import {
+  hideNewFolderInput,
+  reloadNewFolderInputPosition,
+  setNewFolderInputPosition,
+  showNewFolderInput,
+} from "store/newFolderInput/newFolderInput.slice";
+import {
+  hideContextMenu,
+  reloadPosition,
+  setPosition,
+  showContextMenu,
+} from "store/contextMenu/contextMenu.slice";
+import {
+  setTemplateContextMenuPosition,
+  setTemplates,
+  showTemplateContextMenu,
+} from "store/templateContextMenu/templateContextMenu.slice";
+import { clearInputs } from "store/input/inputs.slice";
 
 import {
   getAllFiles,
@@ -23,30 +42,17 @@ import VoidResult from "./VoidResalt";
 import { ContexMenu } from "./ContexMenu";
 
 import { getCurrentIcon } from "./getCurrentIcon";
-import {
-  hideContextMenu,
-  reloadPosition,
-  setPosition,
-  showContextMenu,
-} from "store/contextMenu/contextMenu.slice";
+
+import path, { join } from "path";
 
 import { PopupInput } from "../PopupInput/PopupInput";
-import path, { join } from "path";
-import {
-  hideNewFolderInput,
-  reloadNewFolderInputPosition,
-  setNewFolderInputPosition,
-  showNewFolderInput,
-} from "store/newFolderInput/newFolderInput.slice";
+
 import { MenuItem } from "&/MenuItem/MenuItem";
-import {
-  setTemplateContextMenuPosition,
-  setTemplates,
-  showTemplateContextMenu,
-} from "store/templateContextMenu/templateContextMenu.slice";
+
 import { TemplateContexMenu } from "./TemplateContexMenu";
 import { CustomInput } from "&/CastomInput/CustomInput";
-import { clearInputs } from "store/input/inputs.slice";
+import { lowensteinSort } from "./lowenstein";
+import { similaeSort } from "./similar";
 
 export function Browser() {
   const {
@@ -80,20 +86,8 @@ export function Browser() {
   useEffect(() => {}, [input?.lastValue, currentTree]);
 
   if (input?.lastValue) {
-    currentTree = currentTree.filter((file) => {
-      return path
-        .basename(file)
-        .toLocaleLowerCase()
-        .includes(input.lastValue.toLocaleLowerCase());
-    });
-    currentTree = currentTree.sort((file) => {
-      return path
-        .basename(file)
-        .localeCompare(input.lastValue, undefined, { sensitivity: "base" }) ===
-        0
-        ? 0
-        : -1;
-    });
+    currentTree = similaeSort(currentTree, input.lastValue);
+    currentTree = lowensteinSort(currentTree, input.lastValue);
   }
 
   console.log(currentTree);
@@ -161,7 +155,9 @@ export function Browser() {
           }}
           src={backButtonSVG}
         />
-        <h3 className={styles.title}>{currentDir}</h3>
+        <h3 className={styles.title}>
+          {path.relative(startPath, currentDir) || "root"}
+        </h3>
         <CustomInput name="search" placeholder="search..." type="text" />
       </header>
       <section
